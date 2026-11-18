@@ -9,7 +9,7 @@ Checks the invariants that break installs silently:
   with a description inside the Agent Skills length limit
 
 Usage: python3 scripts/validate.py   (exit 0 = ok, 1 = errors)
-Stdlib only - CI runs this on Python 3.10 with no pip step.
+Stdlib only - CI runs this on Python 3.14 with no pip step.
 """
 from __future__ import annotations
 
