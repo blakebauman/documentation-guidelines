@@ -139,7 +139,7 @@ python3 scripts/validate.py   # run before committing
 python3 scripts/build.py      # writes dist/*.zip and dist/*.skill
 ```
 
-Both scripts need Python 3.9 or later and nothing else. Pushing a `v*` tag that
+Both scripts need Python 3.10 or later and nothing else. Pushing a `v*` tag that
 matches the version in `plugin.json` publishes both artifacts to a GitHub
 Release. [AGENTS.md](AGENTS.md) lists the rules the validator enforces.
 

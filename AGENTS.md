@@ -24,7 +24,7 @@ several agent runtimes can install. The repo root is the plugin root.
 - **Skill `name` matches its directory name**, and the description is at most
   1024 characters.
 - **No `SKILL.md` at the repo root.** Skills live under `skills/`.
-- **Stdlib only** in `scripts/`. CI runs on Python 3.9 with no pip step.
+- **Stdlib only** in `scripts/`. CI runs on Python 3.10 with no pip step.
 
 Before committing, run:
 
