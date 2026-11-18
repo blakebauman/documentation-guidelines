@@ -11,7 +11,8 @@ several agent runtimes can install. The repo root is the plugin root.
 - `plugin.json` — Agent Plugins 1.0 manifest (Codex, Antigravity, and other hosts that read the portable format).
 - `.claude-plugin/plugin.json`, `.claude-plugin/marketplace.json` — Claude Code manifest and marketplace.
 - `.agents/plugins/marketplace.json` — Codex marketplace.
-- `scripts/`, `.github/` — dev tooling; not included in release artifacts.
+- `evals/<case>/` — eval cases: `prompt.md` plus `graders/*.md`. Run by hand; see README.
+- `scripts/`, `evals/`, `.github/` — dev tooling; not included in release artifacts.
 
 ## The invariants
 

@@ -128,6 +128,7 @@ plugin.json                          Agent Plugins 1.0 manifest
 .claude-plugin/marketplace.json      Claude Code marketplace
 .agents/plugins/marketplace.json     Codex marketplace
 skills/documentation-guidelines/     the skill
+evals/                               eval cases for `claude plugin eval`
 scripts/validate.py                  checks the manifests and skills agree
 scripts/build.py                     builds the release artifacts into dist/
 ```
@@ -142,6 +143,37 @@ python3 scripts/build.py      # writes dist/*.zip and dist/*.skill
 Both scripts need Python 3.10 or later and nothing else. Pushing a `v*` tag that
 matches the version in `plugin.json` publishes both artifacts to a GitHub
 Release. [AGENTS.md](AGENTS.md) lists the rules the validator enforces.
+
+### Evals
+
+`evals/` holds five cases that compare an agent with the skill loaded against
+one without it. Each case is a prompt plus graders: `baseline.md` for what any
+competent answer should do, `skill.md` for what the skill specifically asks
+for, and `fired.md` to record whether the skill was loaded.
+
+| Case | Tests |
+| :-- | :-- |
+| `invented-default` | Not inventing a default the code does not show |
+| `surgical-edit` | Changing one fact without rewriting the file |
+| `comment-noise` | Comments that explain why, not what |
+| `unrun-example` | Not presenting output that was never observed |
+| `trivial-typo` | Not over-applying the skill to a one-line fix |
+
+Runs call a model and cost money, so they are not part of CI. Run them from
+the repo root with Claude Code:
+
+```bash
+claude plugin eval . --no-publish                    # all cases, 3 runs each
+claude plugin eval . --no-publish --case surgical-edit --runs 1
+```
+
+Without `--no-publish`, the HTML report is also published to claude.ai.
+Results are written to `evals/results/`, which is not committed.
+
+The suite does not yet show a difference. In single runs on Claude Code
+2.1.327, on both its default model and `--model haiku`, every case scored the
+same with and without the skill. Treat the cases as a starting harness that
+needs harder prompts, not as evidence the skill works.
 
 ## License
 
