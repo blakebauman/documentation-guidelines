@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "name": "documentation-guidelines",
+  "displayName": "Documentation Guidelines",
+  "version": "0.1.0",
+  "description": "Behavioral guardrails for writing, editing, and reviewing documentation: know the reader, document only what was verified, cut filler, edit surgically, and run the examples.",
+  "author": {
+    "name": "Blake Bauman",
+    "url": "https://github.com/blakebauman"
+  },
+  "homepage": "https://github.com/blakebauman/documentation-guidelines",
+  "repository": "https://github.com/blakebauman/documentation-guidelines",
+  "license": "MIT",
+  "keywords": ["documentation", "docs", "technical-writing", "readme", "docstrings", "code-comments", "review"]
+}

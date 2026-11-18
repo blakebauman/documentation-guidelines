@@ -1,0 +1,28 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "documentation-guidelines",
+  "owner": {
+    "name": "Blake Bauman",
+    "url": "https://github.com/blakebauman"
+  },
+  "metadata": {
+    "description": "Behavioral guardrails that prevent the most common LLM documentation mistakes."
+  },
+  "plugins": [
+    {
+      "name": "documentation-guidelines",
+      "displayName": "Documentation Guidelines",
+      "source": "./",
+      "description": "Behavioral guardrails for writing, editing, and reviewing documentation: know the reader, document only what was verified, cut filler, edit surgically, and run the examples.",
+      "version": "0.1.0",
+      "author": {
+        "name": "Blake Bauman"
+      },
+      "homepage": "https://github.com/blakebauman/documentation-guidelines",
+      "repository": "https://github.com/blakebauman/documentation-guidelines",
+      "license": "MIT",
+      "category": "documentation",
+      "keywords": ["documentation", "docs", "technical-writing", "readme", "docstrings", "code-comments", "review"]
+    }
+  ]
+}

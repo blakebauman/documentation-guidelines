@@ -1,0 +1,34 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    name: verify
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.9"
+
+      - name: Manifests and skills validate
+        run: python scripts/validate.py
+
+      - name: Release artifacts build
+        run: |
+          python scripts/build.py
+          unzip -l dist/documentation-guidelines.zip | grep -q " plugin.json$" \
+            || { echo "plugin.json is not at the archive root"; exit 1; }
+          unzip -l dist/documentation-guidelines.zip | grep -q " .claude-plugin/plugin.json$" \
+            || { echo ".claude-plugin/plugin.json is not at the archive root"; exit 1; }
+          unzip -l dist/documentation-guidelines.skill | grep -q " documentation-guidelines/SKILL.md$" \
+            || { echo "SKILL.md is not under the skill folder"; exit 1; }

@@ -1,0 +1,20 @@
+{
+  "name": "documentation-guidelines",
+  "interface": {
+    "displayName": "Documentation Guidelines"
+  },
+  "plugins": [
+    {
+      "name": "documentation-guidelines",
+      "source": {
+        "source": "local",
+        "path": "./"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

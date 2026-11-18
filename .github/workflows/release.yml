@@ -1,0 +1,47 @@
+name: release
+
+# Build the plugin zip and the single-skill archive, and attach both to a
+# GitHub Release whenever a version tag (e.g. v0.1.0) is pushed.
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.9"
+
+      - name: Manifests and skills validate
+        run: python scripts/validate.py
+
+      - name: Tag matches the manifest version
+        run: |
+          python - <<'PY'
+          import json, os, sys
+          tag = os.environ["GITHUB_REF_NAME"].lstrip("v")
+          version = json.load(open("plugin.json"))["version"]
+          if tag != version:
+              sys.exit(f"tag {tag!r} does not match plugin.json version {version!r}")
+          print(f"tag and manifest agree at {version}")
+          PY
+
+      - name: Build artifacts
+        run: python scripts/build.py
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v3
+        with:
+          files: |
+            dist/documentation-guidelines.zip
+            dist/documentation-guidelines.skill
+          generate_release_notes: true
