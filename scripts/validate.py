@@ -7,6 +7,7 @@ Checks the invariants that break installs silently:
 - both marketplace files list the plugin with a source that resolves
 - every skills/<name>/ has a SKILL.md whose `name` matches the directory,
   with a description inside the Agent Skills length limit
+- every evals/<case>/ has a prompt.md and at least one typed grader
 
 Usage: python3 scripts/validate.py   (exit 0 = ok, 1 = errors)
 Stdlib only - CI runs this on Python 3.14 with no pip step.
@@ -157,6 +158,22 @@ for skill in skills:
         errors.append(f"{path}: description is missing")
     elif len(description) > MAX_SKILL_DESCRIPTION:
         errors.append(f"{path}: description is {len(description)} chars, limit {MAX_SKILL_DESCRIPTION}")
+
+# --- evals -----------------------------------------------------------------
+if os.path.isdir("evals"):
+    for case in sorted(os.listdir("evals")):
+        case_dir = os.path.join("evals", case)
+        if case == "results" or not os.path.isdir(case_dir):
+            continue
+        if not os.path.isfile(os.path.join(case_dir, "prompt.md")):
+            errors.append(f"{case_dir}: prompt.md is missing")
+        graders = os.path.join(case_dir, "graders")
+        found = [g for g in os.listdir(graders) if g.endswith(".md")] if os.path.isdir(graders) else []
+        if not found:
+            errors.append(f"{case_dir}: needs at least one graders/*.md")
+        for g in found:
+            if not (frontmatter(os.path.join(graders, g)) or {}).get("type"):
+                errors.append(f"{case_dir}/graders/{g}: frontmatter needs a `type`")
 
 if os.path.exists("SKILL.md"):
     errors.append("SKILL.md at the repo root shadows skills/ for some installers; keep skills under skills/")

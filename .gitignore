@@ -5,3 +5,6 @@ __pycache__/
 # Built by scripts/build.py; generated, not source.
 dist/
 *.skill
+
+# Eval run outputs. The case files under evals/ are source.
+evals/results/
